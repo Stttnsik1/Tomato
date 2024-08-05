@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<link rel="stylesheet" href="stylem.css">
+</head>
+<center><strong><h1><span id="score">0</span></h1></strong></center>
+<center><h3><span id="gems">0</span>💎</h3></center>
+<h1>Market</h1>
+
+<div class="roundcorner">
+<button class="sell" onclick="sell()"><img src="https://i.postimg.cc/SscDjk2b/9-D98-C69-E-7528-4714-9-D0-B-5-BB6546-B458-D.jpg" width="180px" height="100px"></button>
+<button class="buy" onclick="buy()"><img src="https://i.postimg.cc/Rh9GHyK6/4-CBC85-AC-0126-483-D-9061-F44-C44-C5748-E.jpg" width="180px" height="100px"></button>
+</div>
+
+
+<center><div class="container">
+<form action="Task.html">
+<button class="Task">Task</button>
+</form>
+<form action="index.html">
+<button class="Game">Game</button>
+</form>
+<button class="Market">Market</button>
+</div>
+</center>
+
+
+<script>
+ let score = 0;
+    let clickValue = 1;
+    let wateringsBought = 0;
+    let gems = 0;
+
+    window.onload = function() {
+      let savedScore = localStorage.getItem('score');
+      if (savedScore) {
+        score = parseInt(savedScore);
+        document.getElementById('score').textContent = score;
+      }
+
+      let savedGems = localStorage.getItem('gems'); // Correct ID for local storage
+      if (savedGems) {
+        gems = parseInt(savedGems);
+        document.getElementById('gems').textContent = gems; // Update gems display
+      }
+
+      let savedClickValue = localStorage.getItem('clickValue');
+      if (savedClickValue) {
+        clickValue = parseInt(savedClickValue);
+        document.getElementById('clickValue').textContent = clickValue; 
+      }
+
+      let savedWateringsBought = localStorage.getItem('wateringsBought');
+      if (savedWateringsBought) {
+        wateringsBought = parseInt(savedWateringsBought);
+        document.getElementById('wateringsBought').textContent = wateringsBought; 
+      }
+    };
+
+    function earntomato() {
+      score += clickValue;
+      document.getElementById('score').textContent = score;
+      localStorage.setItem('score', score);
+    }
+
+    function sell() {
+  // Get the amount to sell from the user (using a prompt)
+  let amountToSell = parseInt(prompt("Введите количество монет для продажи:"));
+
+  // Validate the input
+  if (isNaN(amountToSell) || amountToSell <= 0 || amountToSell > score) {
+    alert('Введите корректное количество монет.');
+    return;
+  }
+
+  // Calculate the earnings (e.g., half the value)
+  let earning = Math.floor(amountToSell / 1.5);
+
+  // Update the score and gems
+  score -= amountToSell;
+  gems += earning; 
+
+
+  // Update the display
+  document.getElementById('score').textContent = score;
+  document.getElementById('gems').textContent = gems; // Update gems display
+
+  // Save the updated values to local storage
+  localStorage.setItem('score', score);
+  localStorage.setItem('gems', gems); // Save gems to local storage
+}
+
+function buy() {
+  // Get the amount to sell from the user (using a prompt)
+  let amountToBuy = parseInt(prompt("Введите количество монет для покупки:"));
+
+  // Validate the input
+  if (isNaN(amountToBuy) || amountToBuy > gems || amountToBuy <= 0 || amountToBuy < score) {
+    alert('Введите корректное количество монет.');
+    return;
+  }
+
+  // Calculate the earnings (e.g., half the value)
+  let earning = Math.floor(amountToBuy * 1.5);
+
+  // Update the score and gems
+  gems -= amountToBuy;
+  score += earning; 
+
+  // Update the display
+  document.getElementById('gems').textContent = gems;
+  document.getElementById('score').textContent = score; // Update gems display
+
+  // Save the updated values to local storage
+  localStorage.setItem('gems', gems);
+  localStorage.setItem('score', score); // Save gems to local storage
+} 
+</script>
+</html>

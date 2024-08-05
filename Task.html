@@ -1,0 +1,55 @@
+<link rel="stylesheet" href="task.css">
+<center><strong><h1><span id="score">0</span></h1></strong></center>
+<h2>Task:</h2>
+<center><button id="clickButton" class="TomatoChanel" onclick="gotochannel()"><a href="https://t.me/stinstiks" class="Tomat"><h3>Go to Community<br>+100 Tomato</h3></a></button></center>
+
+<center><div class="container">
+<button class="Task">Task</button>
+<form action="Menu.html">
+<button class="Game">Game</button>
+</form>
+<form action="Market1.html">
+<button class="Market">Market</button>
+</form>
+</div>
+</center>
+
+<script>
+  let score = 0;
+  let clickValue = 100;
+  let wateringsBought = 0;
+
+  window.onload = function() {
+    let savedScore = localStorage.getItem('score');
+    if (savedScore) {
+      score = parseInt(savedScore);
+      document.getElementById('score').textContent = score;
+    }
+
+     // Проверяем, была ли кнопка уже нажата в предыдущей сессии
+     let buttonClicked = localStorage.getItem('buttonClicked');
+      if (buttonClicked === 'true') {
+        document.getElementById('clickButton').disabled = true;
+        document.getElementById('clickButton').textContent = "Completed✅";
+      }
+  };
+
+  // Функция для обработки клика по кнопке
+  function gotochannel() {
+    // Проверяем, была ли кнопка уже нажата
+    if (document.getElementById('clickButton').disabled) {
+      return; // Выход из функции, если кнопка уже отключена
+    }
+
+    score += clickValue;
+    document.getElementById('score').textContent = score;
+    localStorage.setItem('score', score);
+
+    // Отключаем кнопку после первого клика
+    document.getElementById('clickButton').disabled = true;
+    document.getElementById('clickButton').textContent = "Completed✅";
+
+    // Сохраняем информацию о том, что кнопка была нажата
+    localStorage.setItem('buttonClicked', 'true'); 
+  }
+</script>
